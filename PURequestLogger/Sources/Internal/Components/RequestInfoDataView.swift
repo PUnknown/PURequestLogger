@@ -4,10 +4,11 @@ class RequestInfoDataView: UIView {
     // MARK: - Variables
     private let headers: [String: String]
     private let data: Data?
-    private var cnsWidth: NSLayoutConstraint?
+    private var cnsBodyHeight: NSLayoutConstraint?
     
     // MARK: - UI
     private let svContainer: UIScrollView = UIScrollView()
+    private let tvBody: UITextView = UITextView()
     
     // MARK: - Init
     init(headers: [String: String], data: Data?) {
@@ -26,14 +27,16 @@ class RequestInfoDataView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        cnsWidth?.constant = bounds.width
-        cnsWidth?.isActive = true
+        guard bounds.width > 0 else { return }
+        
+        tvBody.layoutIfNeeded()
+        cnsBodyHeight?.constant = tvBody.sizeThatFits(.init(width: tvBody.bounds.width, height: .greatestFiniteMagnitude)).height + 1
+        cnsBodyHeight?.isActive = true
     }
     
     // MARK: - Configure
     private func configure() {
         addSubview(svContainer)
-        svContainer.showsVerticalScrollIndicator = false
         svContainer.translatesAutoresizingMaskIntoConstraints = false
         svContainer.topAnchor.constraint(equalTo: topAnchor).isActive = true
         svContainer.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
@@ -43,7 +46,7 @@ class RequestInfoDataView: UIView {
         let vwWidth = UIView()
         svContainer.addSubview(vwWidth)
         vwWidth.translatesAutoresizingMaskIntoConstraints = false
-        cnsWidth = vwWidth.widthAnchor.constraint(equalToConstant: 0)
+        vwWidth.widthAnchor.constraint(equalTo: svContainer.widthAnchor).isActive = true
         vwWidth.topAnchor.constraint(equalTo: svContainer.topAnchor).isActive = true
         vwWidth.leftAnchor.constraint(equalTo: svContainer.leftAnchor).isActive = true
         vwWidth.rightAnchor.constraint(equalTo: svContainer.rightAnchor).isActive = true
@@ -56,25 +59,32 @@ class RequestInfoDataView: UIView {
             svContainer.addSubview(vw)
             vw.translatesAutoresizingMaskIntoConstraints = false
             vw.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? svContainer.topAnchor, constant: 8).isActive = true
-            vw.leftAnchor.constraint(equalTo: svContainer.leftAnchor).isActive = true
-            vw.rightAnchor.constraint(equalTo: svContainer.rightAnchor).isActive = true
+            vw.leftAnchor.constraint(equalTo: svContainer.leftAnchor, constant: 16).isActive = true
+            vw.rightAnchor.constraint(equalTo: svContainer.rightAnchor, constant: -16).isActive = true
             
             lastView = vw
         }
         
-        if let bodyString = data?.prettyJSONString {
-            let lbBody = UILabel()
-            lbBody.numberOfLines = 0
-            lbBody.font = .systemFont(ofSize: 14)
-            lbBody.textColor = .black
-            lbBody.text = bodyString
-            svContainer.addSubview(lbBody)
-            lbBody.translatesAutoresizingMaskIntoConstraints = false
-            lbBody.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? svContainer.topAnchor, constant: 8).isActive = true
-            lbBody.leftAnchor.constraint(equalTo: svContainer.leftAnchor).isActive = true
-            lbBody.rightAnchor.constraint(equalTo: svContainer.rightAnchor).isActive = true
+        var bodyString: String? = nil
+        if let rawData = data {
+            if rawData.count <= 1 * 1024 * 1024 /* 1 mb */, let jsonString = rawData.prettyJSONString {
+                bodyString = jsonString
+            } else {
+                bodyString = String(data: rawData, encoding: .utf8)
+            }
+        }
+        if let bodyString = bodyString {
+            tvBody.font = .systemFont(ofSize: 14)
+            tvBody.textColor = .black
+            tvBody.text = bodyString
+            svContainer.addSubview(tvBody)
+            tvBody.translatesAutoresizingMaskIntoConstraints = false
+            tvBody.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? svContainer.topAnchor, constant: 8).isActive = true
+            tvBody.leftAnchor.constraint(equalTo: svContainer.leftAnchor, constant: 16).isActive = true
+            tvBody.rightAnchor.constraint(equalTo: svContainer.rightAnchor, constant: -16).isActive = true
+            cnsBodyHeight = tvBody.heightAnchor.constraint(equalToConstant: 0)
             
-            lastView = lbBody
+            lastView = tvBody
         }
         
         lastView?.bottomAnchor.constraint(equalTo: svContainer.bottomAnchor, constant: -16).isActive = true

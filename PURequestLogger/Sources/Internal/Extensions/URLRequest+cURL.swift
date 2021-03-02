@@ -11,7 +11,7 @@ extension URLRequest {
         
         var data: String = ""
         if let bodyData = httpBody, let bodyString = String(data: bodyData, encoding: .utf8) {
-            data = "    -d \(bodyString) \\\n"
+            data = "    -d \'\(bodyString)\' \\\n"
         }
         
         let url = "    \'\(self.url?.absoluteString ?? "")\'"

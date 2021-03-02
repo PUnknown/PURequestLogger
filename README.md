@@ -46,9 +46,11 @@ class BaseNavigationController: UINavigationController {
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         super.motionBegan(motion, with: event)
         
+        #if DEBUG
         if motion == .motionShake {
             PURequestLogger.sharedInstance.presentLogsViewController()
         }
+        #endif
     }
 }
 ```

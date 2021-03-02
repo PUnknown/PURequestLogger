@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
 
   spec.platform     = :ios
   spec.name         = "PURequestLogger"
-  spec.version      = "1.0.0"
+  spec.version      = "1.0.1"
   spec.summary      = "PURequestLogger is a handy iOS tool for viewing app's network activity."
   
   spec.homepage     = "https://github.com/PUnknown/PURequestLogger"
@@ -33,6 +33,10 @@ Pod::Spec.new do |spec|
   
   spec.description  = <<-DESC
   PURequestLogger
+  1.0.1
+  	Fixed cURL body composing.
+  	Any request/response data larger than 1 MB or that can't be displayed as a JSON is now displayed raw.
+  	Minor UI improvements.
   1.0.0
     Initial release
                    DESC

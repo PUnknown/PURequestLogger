@@ -31,7 +31,6 @@ class RequestInfoOverviewView: UIView {
     // MARK: - Configure
     private func configure() {
         addSubview(svContainer)
-        svContainer.showsVerticalScrollIndicator = false
         svContainer.translatesAutoresizingMaskIntoConstraints = false
         svContainer.topAnchor.constraint(equalTo: topAnchor).isActive = true
         svContainer.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
@@ -106,8 +105,8 @@ class RequestInfoOverviewView: UIView {
         svContainer.addSubview(vw)
         vw.translatesAutoresizingMaskIntoConstraints = false
         vw.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
-        vw.leftAnchor.constraint(equalTo: svContainer.leftAnchor).isActive = true
-        vw.rightAnchor.constraint(equalTo: svContainer.rightAnchor).isActive = true
+        vw.leftAnchor.constraint(equalTo: svContainer.leftAnchor, constant: 16).isActive = true
+        vw.rightAnchor.constraint(equalTo: svContainer.rightAnchor, constant: -16).isActive = true
         
         return vw
     }

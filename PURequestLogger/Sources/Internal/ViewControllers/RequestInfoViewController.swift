@@ -56,23 +56,23 @@ class RequestInfoViewController: UIViewController {
         view.addSubview(vwOverviewView)
         vwOverviewView.translatesAutoresizingMaskIntoConstraints = false
         vwOverviewView.topAnchor.constraint(equalTo: scSegment.bottomAnchor, constant: 8).isActive = true
-        vwOverviewView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        vwOverviewView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         vwOverviewView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        vwOverviewView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+        vwOverviewView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
         view.addSubview(vwRequestView)
         vwRequestView.translatesAutoresizingMaskIntoConstraints = false
         vwRequestView.topAnchor.constraint(equalTo: scSegment.bottomAnchor, constant: 8).isActive = true
-        vwRequestView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        vwRequestView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         vwRequestView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        vwRequestView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+        vwRequestView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
         view.addSubview(vwResponseView)
         vwResponseView.translatesAutoresizingMaskIntoConstraints = false
         vwResponseView.topAnchor.constraint(equalTo: scSegment.bottomAnchor, constant: 8).isActive = true
-        vwResponseView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        vwResponseView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         vwResponseView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        vwResponseView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+        vwResponseView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
         configureNavigationBar()
         updateUI()
