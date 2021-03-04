@@ -77,6 +77,7 @@ class RequestInfoDataView: UIView {
             tvBody.font = .systemFont(ofSize: 14)
             tvBody.textColor = .black
             tvBody.text = bodyString
+            tvBody.isEditable = false
             svContainer.addSubview(tvBody)
             tvBody.translatesAutoresizingMaskIntoConstraints = false
             tvBody.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? svContainer.topAnchor, constant: 8).isActive = true
